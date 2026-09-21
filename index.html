@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regula Aí - Página de Notícias DREG | Grupo Energisa</title>
+<style>
+/* ============================================================
+   REGULA AÍ / componente para a página do SharePoint
+   Só o cabeçalho padrão e a chamada para a página completa.
+   Sem JavaScript.
+   ============================================================ */
+
+:root{
+  --en-azul:#009FC2; --en-laranja:#F37021; --en-laranja-cl:#FF8B42;
+  --nv:#004758; --ink:#1F2A33; --muted:#5B6B78; --soft:#71838E;
+  --border:#E3E9EE; --bg:#F6F8FA; --wh:#FFFFFF;
+}
+*{ box-sizing:border-box; }
+body{
+  margin:0; padding:0; background:var(--wh); color:var(--ink);
+  font-family:"Segoe UI",Inter,system-ui,-apple-system,Arial,sans-serif;
+  font-size:14px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+
+/* ════════════════════════════════════════════════════════════
+   CABEÇALHO PADRÃO DOS TÓPICOS
+   Bloco reutilizável: copiar este trecho de CSS junto com o
+   elemento de cabeçalho correspondente em qualquer outro tópico
+   do site, trocando apenas o texto do título.
+   ════════════════════════════════════════════════════════════ */
+.topbar{
+  --sym:clamp(104px,11.5vw,148px);   /* largura do símbolo da diretoria */
+  position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  /* O símbolo é um sistema de elipses achatadas: seu viewBox foi
+     recortado para o conteúdo real, numa proporção de cerca de 2:1.
+     Por isso ele pode ser largo sem exigir altura da faixa. */
+  min-height:clamp(78px,8.2vw,100px);
+  padding:4px 0;
+  background:linear-gradient(100deg,
+    #124A44 0%, #165D54 23%, #12776F 49%, #0F6E6B 66%, #0A4750 100%);
+}
+.topbar::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 10% 120% at 18% 48%, rgba(255,255,255,.40), rgba(255,255,255,.07) 34%, transparent 66%),
+    radial-gradient(ellipse 36% 190% at 30% 50%, rgba(150,240,228,.11), transparent 64%),
+    radial-gradient(ellipse 60% 140% at 50% 120%, rgba(0,0,0,.20), transparent 62%);
+}
+.topbar::after{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.55;
+  background-image:radial-gradient(circle, rgba(255,255,255,.60) .9px, transparent 1.15px);
+  background-size:9px 9px;
+  -webkit-mask-image:linear-gradient(90deg, transparent 50%, #000 76%, rgba(0,0,0,.35) 100%);
+          mask-image:linear-gradient(90deg, transparent 50%, #000 76%, rgba(0,0,0,.35) 100%);
+}
+.tb-art{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+/* O fundo sangra de ponta a ponta, mas o conteúdo segue a mesma
+   largura máxima e o mesmo recuo lateral do .wrap. É isso que alinha
+   o símbolo com a borda direita do conteúdo logo abaixo. */
+.tb-inner{
+  position:relative; z-index:2;
+  width:100%; max-width:1180px; margin:0 auto; padding:0 22px;
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+}
+.tb-title{
+  position:relative; z-index:2; flex:1; min-width:0; margin:0; text-align:center;
+  /* Trebuchet MS é a fonte do banner original do site */
+  font-family:"Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;
+  color:#fff; font-style:italic; font-weight:800;
+  font-size:clamp(19px,2.7vw,34px); line-height:1.15; letter-spacing:.2px;
+  text-shadow:0 2px 12px rgba(0,0,0,.30);
+}
+/* espaçador do mesmo tamanho do símbolo: é ele que mantém o título
+   opticamente centralizado, em vez de deslocado para a esquerda */
+.tb-vazio{ flex:0 0 var(--sym); width:var(--sym); }
+.tb-sym{ flex:0 0 var(--sym); width:var(--sym); height:auto; }
+@media(max-width:620px){ .tb-inner{ padding:0 15px; } }
+@media(max-width:560px){
+  .tb-vazio{ display:none; }
+  .topbar{ --sym:66px; }
+}
+/* ══════════════════ fim do cabeçalho padrão ══════════════════ */
+
+/* ════════════════════════════════════════════════════════════
+   SÍMBOLO 3D DA DIRETORIA
+   Cinco camadas orbitais em torno de uma esfera. Cada órbita tem
+   raio próprio, o que separa GRTC e GGAT, cujas cores são as mais
+   próximas da paleta.
+   A esfera fica NO MEIO das órbitas: cada órbita é partida em duas,
+   a metade de cima (distante) atrás da esfera e a de baixo (próxima)
+   na frente. Cada partícula tem duas cópias, uma por camada, e a
+   troca acontece nos extremos laterais, fora da silhueta da esfera.
+   ════════════════════════════════════════════════════════════ */
+.s3{ display:block; overflow:visible; }
+.s3 .plano{
+  transform-box:view-box; transform-origin:50px 50px;
+  animation-timing-function:linear; animation-iteration-count:infinite;
+}
+.s3 .pl-grtc{ animation-name:plano000; animation-duration:43s; }
+.s3 .pl-geer{ animation-name:plano036; animation-duration:37s; }
+.s3 .pl-ggat{ animation-name:plano072; animation-duration:54s; }
+.s3 .pl-grec{ animation-name:plano108; animation-duration:49s; }
+.s3 .pl-asse{ animation-name:plano144; animation-duration:63s; }
+@keyframes plano000{ from{ transform:rotate(0deg);   } to{ transform:rotate(360deg);  } }
+@keyframes plano036{ from{ transform:rotate(36deg);  } to{ transform:rotate(-324deg); } }
+@keyframes plano072{ from{ transform:rotate(72deg);  } to{ transform:rotate(432deg);  } }
+@keyframes plano108{ from{ transform:rotate(108deg); } to{ transform:rotate(-252deg); } }
+@keyframes plano144{ from{ transform:rotate(144deg); } to{ transform:rotate(504deg);  } }
+.s3 .esfera{ transform-box:fill-box; transform-origin:center; animation:respira 10s ease-in-out infinite; }
+@keyframes respira{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.035); } }
+.s3 .brilho{ transform-box:fill-box; transform-origin:center; animation:brilha 10s ease-in-out infinite; }
+@keyframes brilha{ 0%,100%{ transform:translate(0,0); opacity:.92; } 50%{ transform:translate(1.5px,-1px); opacity:1; } }
+.s3 .part{
+  offset-rotate:0deg;
+  transform-box:fill-box; transform-origin:center;
+  animation-timing-function:linear; animation-iteration-count:infinite;
+}
+.s3 .p-grtc{ offset-path:path('M 14,50   a 36,14     0 1,0 72,0 a 36,14     0 1,0 -72,0'); animation-duration:14s,  14s,  14s;   }
+.s3 .p-geer{ offset-path:path('M 16,50   a 34,13     0 1,0 68,0 a 34,13     0 1,0 -68,0'); animation-duration:12.2s,12.2s,12.2s; animation-delay:-4.3s,-4.3s,-4.3s; }
+.s3 .p-ggat{ offset-path:path('M 19,50   a 31,11.5   0 1,0 62,0 a 31,11.5   0 1,0 -62,0'); animation-duration:18s,  18s,  18s;   animation-delay:-8.6s,-8.6s,-8.6s; }
+.s3 .p-grec{ offset-path:path('M 21.5,50 a 28.5,10.5 0 1,0 57,0 a 28.5,10.5 0 1,0 -57,0'); animation-duration:15.7s,15.7s,15.7s; animation-delay:-2.1s,-2.1s,-2.1s; }
+.s3 .p-asse{ offset-path:path('M 24,50   a 26,9.5    0 1,0 52,0 a 26,9.5    0 1,0 -52,0'); animation-duration:20.3s,20.3s,20.3s; animation-delay:-11.4s,-11.4s,-11.4s; }
+@keyframes orbVolta{ to{ offset-distance:100%; } }
+@keyframes orbEscala{
+  0%  { transform:scale(1);    }
+  25% { transform:scale(1.20); }
+  50% { transform:scale(1);    }
+  75% { transform:scale(.60);  }
+  100%{ transform:scale(1);    }
+}
+.s3 .pn{ animation-name:orbVolta, orbEscala, orbCamadaFrente; }
+@keyframes orbCamadaFrente{ 0%,49.9%{ opacity:1; } 50%,100%{ opacity:0; } }
+.s3 .pf{ animation-name:orbVolta, orbEscala, orbCamadaFundo; }
+@keyframes orbCamadaFundo{ 0%,49.9%{ opacity:0; } 50%,100%{ opacity:1; } }
+
+/* ---------------- chamada para a página completa ---------------- */
+.acao{
+  max-width:1180px; margin:0 auto; padding:18px 22px 22px;
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(16px,3vw,34px); flex-wrap:wrap;
+}
+.cta{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:13px 26px; border-radius:8px; text-decoration:none;
+  background:linear-gradient(135deg,#16605A 0%,#0C4A4E 100%);
+  color:var(--en-laranja); font-size:15px; font-weight:800; letter-spacing:.2px;
+  box-shadow:0 5px 16px rgba(18,74,68,.24);
+  transition:transform .18s, box-shadow .18s, color .18s;
+}
+.cta svg{ width:17px; height:17px; flex-shrink:0; }
+.cta .seta{ font-size:16px; transition:transform .18s; }
+.cta:hover{
+  transform:translateY(-2px); color:var(--en-laranja-cl);
+  box-shadow:0 10px 24px rgba(18,74,68,.30);
+}
+.cta:hover .seta{ transform:translateX(3px); }
+.cta:focus-visible{ outline:3px solid rgba(243,112,33,.55); outline-offset:3px; }
+.aviso{ margin:0; color:var(--nv); font-size:13px; font-style:italic; }
+
+@media(max-width:560px){
+  .acao{ padding:16px 15px 20px; gap:14px; }
+  .cta{ padding:12px 20px; font-size:14px; }
+}
+@media(prefers-reduced-motion:reduce){
+  *{ transition-duration:.01ms!important; }
+  /* o símbolo congela; o desenho permanece legível */
+  .s3 .plano,.s3 .esfera,.s3 .brilho,.s3 .part{ animation:none!important; }
+  .s3 .pf{ opacity:1; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ CABEÇALHO PADRÃO DO TÓPICO ══════════ -->
+<header class="topbar">
+  <svg class="tb-art" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="#FFFFFF" opacity=".24">
+      <path d="M-20 76 C 260 44, 540 27, 1220 7"   stroke-width="1"/>
+      <path d="M-20 90 C 300 60, 650 41, 1220 27"  stroke-width=".8" opacity=".62"/>
+      <path d="M-20 34 C 240 20, 520 13, 1220 -2"  stroke-width=".7" opacity=".45"/>
+    </g>
+    <g fill="none" stroke="#BFF3EC" opacity=".55">
+      <path d="M830 -12 C 892 30, 934 60, 1006 112" stroke-width="1.2"/>
+      <path d="M902 -12 C 968 34, 1004 62, 1078 112" stroke-width=".9" opacity=".72"/>
+      <path d="M-20 62 C 220 31, 430 21, 780 13"    stroke-width=".9" opacity=".6"/>
+    </g>
+  </svg>
+
+  <div class="tb-inner">
+    <div class="tb-vazio" aria-hidden="true"></div>
+    <h1 class="tb-title">Regula Aí - Página de Notícias DREG</h1>
+
+    <!-- Símbolo da diretoria: esfera e cinco camadas orbitais -->
+    <svg class="s3 tb-sym" viewBox="9 30 82 40" role="img"
+         aria-label="Símbolo da Diretoria de Regulação: as quatro gerências e as assessorias orbitando um núcleo">
+      <defs>
+        <radialGradient id="g-esfera" cx="34%" cy="28%" r="78%">
+          <stop offset="0%"   stop-color="#5FE0EE"/>
+          <stop offset="24%"  stop-color="#1BA5BA"/>
+          <stop offset="62%"  stop-color="#0B6E7E"/>
+          <stop offset="88%"  stop-color="#064A57"/>
+          <stop offset="100%" stop-color="#03323C"/>
+        </radialGradient>
+        <radialGradient id="g-rim" cx="50%" cy="50%" r="50%">
+          <stop offset="76%"  stop-color="#5FE3F0" stop-opacity="0"/>
+          <stop offset="94%"  stop-color="#5FE3F0" stop-opacity=".40"/>
+          <stop offset="100%" stop-color="#9BF2FA" stop-opacity=".70"/>
+        </radialGradient>
+        <radialGradient id="g-brilho" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#FFFFFF" stop-opacity=".92"/>
+          <stop offset="55%"  stop-color="#FFFFFF" stop-opacity=".28"/>
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <g fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path class="plano pl-grtc" d="M 14,50   A 36,14     0 0 1 86,50"   stroke="rgba(0,159,194,.48)"/>
+        <path class="plano pl-geer" d="M 16,50   A 34,13     0 0 1 84,50"   stroke="rgba(243,112,33,.48)"/>
+        <path class="plano pl-ggat" d="M 19,50   A 31,11.5   0 0 1 81,50"   stroke="rgba(86,183,171,.50)"/>
+        <path class="plano pl-grec" d="M 21.5,50 A 28.5,10.5 0 0 1 78.5,50" stroke="rgba(194,205,35,.52)"/>
+        <path class="plano pl-asse" d="M 24,50   A 26,9.5    0 0 1 76,50"   stroke="rgba(206,212,215,.46)"/>
+      </g>
+      <g class="plano pl-grtc"><circle class="part pf p-grtc" r="3.0" fill="#009FC2"/></g>
+      <g class="plano pl-geer"><circle class="part pf p-geer" r="2.9" fill="#F37021"/></g>
+      <g class="plano pl-ggat"><circle class="part pf p-ggat" r="2.6" fill="#56B7AB"/></g>
+      <g class="plano pl-grec"><circle class="part pf p-grec" r="2.5" fill="#C2CD23"/></g>
+      <g class="plano pl-asse"><circle class="part pf p-asse" r="2.3" fill="#CED4D7"/></g>
+      <g class="esfera">
+        <circle cx="50" cy="50" r="15" fill="url(#g-esfera)"/>
+        <circle cx="50" cy="50" r="15" fill="url(#g-rim)"/>
+        <ellipse class="brilho" cx="44.5" cy="43.5" rx="5.6" ry="4.2" fill="url(#g-brilho)"/>
+      </g>
+      <g fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path class="plano pl-grtc" d="M 14,50   A 36,14     0 0 0 86,50"   stroke="rgba(0,159,194,.94)"/>
+        <path class="plano pl-geer" d="M 16,50   A 34,13     0 0 0 84,50"   stroke="rgba(243,112,33,.94)"/>
+        <path class="plano pl-ggat" d="M 19,50   A 31,11.5   0 0 0 81,50"   stroke="rgba(86,183,171,.96)"/>
+        <path class="plano pl-grec" d="M 21.5,50 A 28.5,10.5 0 0 0 78.5,50" stroke="rgba(194,205,35,.97)"/>
+        <path class="plano pl-asse" d="M 24,50   A 26,9.5    0 0 0 76,50"   stroke="rgba(206,212,215,.86)"/>
+      </g>
+      <g class="plano pl-grtc"><circle class="part pn p-grtc" r="3.0" fill="#009FC2"/></g>
+      <g class="plano pl-geer"><circle class="part pn p-geer" r="2.9" fill="#F37021"/></g>
+      <g class="plano pl-ggat"><circle class="part pn p-ggat" r="2.6" fill="#56B7AB"/></g>
+      <g class="plano pl-grec"><circle class="part pn p-grec" r="2.5" fill="#C2CD23"/></g>
+      <g class="plano pl-asse"><circle class="part pn p-asse" r="2.3" fill="#CED4D7"/></g>
+    </svg>
+  </div>
+</header>
+
+<!-- ══════════ CHAMADA ══════════ -->
+<div class="acao">
+  <a class="cta"
+     href="https://engage.cloud.microsoft/main/org/energisa.com.br/groups/eyJfdHlwZSI6Ikdyb3VwIiwiaWQiOiIyNTQ1MTQ2NTkzMjgifQ/all"
+     target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    Veja a página completa
+    <span class="seta" aria-hidden="true">&rarr;</span>
+  </a>
+  <p class="aviso">* Apenas para colaboradores DREG</p>
+</div>
+
+</body>
+</html>
