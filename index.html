@@ -12,7 +12,10 @@
    ============================================================ */
 
 :root{
-  --en-azul:#009FC2; --en-laranja:#F37021; --en-laranja-cl:#FF8B42;
+  --en-azul:#009FC2; --en-laranja:#F37021;
+  /* dourado e teal do card original do Regula Aí */
+  --ouro:#F5B83F; --ouro-cl:#FFC94D;
+  --card-a:#30605E; --card-b:#24504F;
   --nv:#004758; --ink:#1F2A33; --muted:#5B6B78; --soft:#71838E;
   --border:#E3E9EE; --bg:#F6F8FA; --wh:#FFFFFF;
 }
@@ -144,19 +147,19 @@ body{
 .cta{
   display:inline-flex; align-items:center; gap:10px;
   padding:13px 26px; border-radius:8px; text-decoration:none;
-  background:linear-gradient(135deg,#16605A 0%,#0C4A4E 100%);
-  color:var(--en-laranja); font-size:15px; font-weight:800; letter-spacing:.2px;
+  background:linear-gradient(135deg,var(--card-a) 0%,var(--card-b) 100%);
+  color:var(--ouro); font-size:15px; font-weight:800; letter-spacing:.2px;
   box-shadow:0 5px 16px rgba(18,74,68,.24);
   transition:transform .18s, box-shadow .18s, color .18s;
 }
 .cta svg{ width:17px; height:17px; flex-shrink:0; }
 .cta .seta{ font-size:16px; transition:transform .18s; }
 .cta:hover{
-  transform:translateY(-2px); color:var(--en-laranja-cl);
+  transform:translateY(-2px); color:var(--ouro-cl);
   box-shadow:0 10px 24px rgba(18,74,68,.30);
 }
 .cta:hover .seta{ transform:translateX(3px); }
-.cta:focus-visible{ outline:3px solid rgba(243,112,33,.55); outline-offset:3px; }
+.cta:focus-visible{ outline:3px solid rgba(245,184,63,.60); outline-offset:3px; }
 .aviso{ margin:0; color:var(--nv); font-size:13px; font-style:italic; }
 
 @media(max-width:560px){
